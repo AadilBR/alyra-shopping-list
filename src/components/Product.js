@@ -1,8 +1,8 @@
 const Product = (props) => {
-  const { product, removeFromShopping } = props
+  const { product, removeFromShoppingList } = props
 
   const handleButtonClick = () => {
-    removeFromShopping(product)
+    removeFromShoppingList(product)
   }
 
   return (
