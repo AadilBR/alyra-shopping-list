@@ -1,18 +1,33 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import AddPopularProduct from "./AddPopularProduct"
 import ShoppingList from "./ShoppingList"
 import AddProductForm from "./AddProductForm"
 
 const ShoppingApp = () => {
-  const [shopping, setShopping] = useState([])
+  const getInitialShopping = () => JSON.parse(window.localStorage.getItem("my-shopping-list")) || [];
 
+  const [shopping, setShopping] = useState(getInitialShopping);
+
+
+
+  const [filter, setFilter] = useState("")
   const addToShoppingList = (product) => {
     setShopping([...shopping, product])
+    setFilter("")
   }
 
   const removeFromShoppingList = (product) => {
     setShopping(shopping.filter((el) => el !== product))
   }
+
+  useEffect(() => {
+    document.title = shopping.length ? `Vous avez ${shopping.length} produits à acheter` : "Préparez votre liste de courses !"
+  }, [shopping.length])
+
+  useEffect(() => {
+    window.localStorage.setItem("my-shopping-list", JSON.stringify(shopping))
+  }, [shopping])
+
   return (
     <main className="row">
       <section className="col-lg-8">
